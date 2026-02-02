@@ -26,6 +26,10 @@ jobs:
           cd backend
           npm install
 
+      - name: Generate Prisma Client
+        # This fixes the "Module not found" error in your CI logs
+        run: cd backend && npx prisma generate
+
       - name: Type Check Backend
         run: |
           cd backend

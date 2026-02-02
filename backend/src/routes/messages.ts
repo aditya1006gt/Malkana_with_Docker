@@ -4,6 +4,7 @@ import express from 'express';
 import z from 'zod';
 import authMiddleware from '../middleware.js';
 import { getIO } from '../webSocket.js';
+import type { Prisma } from '../generated/prisma/client.js';
 
 
 
@@ -296,7 +297,7 @@ router.post('/messages', authMiddleware, async (req: Request, res: Response) => 
     }
 
     // 2. Use a Transaction to create message and update conversation stats
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // 1. Create the message
       const newMessage = await tx.message.create({
         data: {

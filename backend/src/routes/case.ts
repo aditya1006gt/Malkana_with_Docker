@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import QRCode from "qrcode";
 import multer from "multer";
 import { uploadImageToS3 } from "../utils/s3.js";
+import type { Prisma } from '../generated/prisma/client.js';
 
 const router = express.Router();
 
@@ -390,7 +391,7 @@ router.post("/property/:id/move", authMiddleware, async (req, res) => {
             });
         }
 
-        const updatedLog = await prisma.$transaction(async (tx) => {
+        const updatedLog = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
             const log = await tx.custodyLog.create({
                 data: {
                     propertyId: id,

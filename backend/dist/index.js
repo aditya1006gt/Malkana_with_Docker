@@ -3,11 +3,12 @@ import http from 'http';
 import cors from 'cors';
 import mainRouter from './routes/index.js';
 import { initializeWebSocket } from './webSocket.js';
+import { config } from './config.js';
 const app = express();
 const server = http.createServer(app);
 // Middleware
 app.use(cors({
-    origin: [process.env.CLIENT_URL || 'http://localhost:3000', "https://hoppscotch.io", 'http://localhost:5173'],
+    origin: [config.frontendUrl || 'http://localhost:3000', "https://hoppscotch.io", 'http://localhost:5173'],
     credentials: true
 }));
 app.use(express.json());
